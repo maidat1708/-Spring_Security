@@ -2,11 +2,20 @@ package main.security.DTO.Request;
 
 import java.time.LocalDate;
 
+import jakarta.validation.constraints.Size;
+import main.security.Validation.Interface.IIsCharacterUppercased;
+
 public class UserCreationRequest {
+    
+    @IIsCharacterUppercased(maxLength = 20)
+    @Size(min = 3, message = "USERNAME_TOO_SHORT")
     private String username;
+    
+    @Size(min = 8, message = "PASSWORD_TOO_SHORT")
     private String password;
     private String firstName;
     private String lastName;
+    
     private LocalDate dob;
     public String getUsername() {
         return username;

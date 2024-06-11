@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.validation.Valid;
 import main.security.DTO.Request.UserCreationRequest;
 import main.security.DTO.Request.UserUpdateRequest;
+import main.security.DTO.Respone.APIResponse;
 import main.security.Entites.User;
 import main.security.Service.UserService;
 
@@ -24,8 +26,10 @@ public class UserController {
     private UserService service;
 
     @PostMapping
-    public User creatUser(@RequestBody UserCreationRequest request){
-        return service.createUser(request);
+    public APIResponse<User> createUser(@RequestBody @Valid UserCreationRequest request){
+        APIResponse<User> apiResponse = new APIResponse<>();
+        apiResponse.setResult(service.createUser(request));
+        return apiResponse;
     }
 
     @GetMapping

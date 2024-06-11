@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import main.security.DTO.Request.UserCreationRequest;
 import main.security.DTO.Request.UserUpdateRequest;
 import main.security.Entites.User;
+import main.security.Exception.AppException;
+import main.security.Exception.ErrorCode;
 import main.security.Repository.UserRepository;
 
 @Service
@@ -17,6 +19,9 @@ public class UserService {
 
     public User createUser(UserCreationRequest request){
         User user = new User();
+        
+        if(repo.existsByUsername(request.getUsername())) throw new AppException(ErrorCode.USER_EXISTED);
+
         user.setUsername(request.getUsername());
         user.setPassword(request.getPassword());
         user.setFirstName(request.getFirstName());
@@ -31,7 +36,7 @@ public class UserService {
     }
 
     public User getUser(String id){
-        return repo.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+        return repo.findById(id).orElseThrow(() -> new AppException(ErrorCode.NOT_FOUND,"User not found!"));
     }
 
     public User updateUser(String id, UserUpdateRequest request){

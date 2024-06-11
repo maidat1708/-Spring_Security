@@ -7,5 +7,5 @@ import main.security.Entites.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User,String> {
-    
+    Boolean existsByUsername(String username);
 }
