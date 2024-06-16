@@ -7,5 +7,6 @@ import main.security.Entites.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User,String> {
-    Boolean existsByUsername(String username);
+    boolean existsByUsername(String username);
+    Optional<User> findByUsername(String username);
 }
